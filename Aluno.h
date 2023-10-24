@@ -8,10 +8,14 @@
 #include <string>
 
 class Aluno{
-public:
+private:
     std::string name;
     int student_number;
+public:
     Aluno();
+    Aluno(std::string name_, int student_number_);
+
+
 };
 
 #endif //AED2324_PRJ1_G11_ALUNO_H

@@ -24,7 +24,9 @@ else(DOXYGEN_FOUND)
     message("Doxygen needs to be installed to generate the documentation.")
 endif(DOXYGEN_FOUND)
 
-add_executable(AED2324_PRJ1_G11 main.cpp UC.h
+add_executable(AED2324_PRJ1_G11 main.cpp
         Turma.h
-        Aluno.h)
+        Aluno.h
+        Aluno.cpp
+        Turma.cpp)
 

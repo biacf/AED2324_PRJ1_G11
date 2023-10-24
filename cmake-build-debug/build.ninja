@@ -61,6 +61,18 @@ build CMakeFiles/AED2324_PRJ1_G11.dir/main.cpp.obj: CXX_COMPILER__AED2324_PRJ1_G
   OBJECT_DIR = CMakeFiles\AED2324_PRJ1_G11.dir
   OBJECT_FILE_DIR = CMakeFiles\AED2324_PRJ1_G11.dir
 
+build CMakeFiles/AED2324_PRJ1_G11.dir/Aluno.cpp.obj: CXX_COMPILER__AED2324_PRJ1_G11_unscanned_Debug C$:/Users/AnaBeatrizCarneiroFe/Desktop/uni/2$ ano/AED/AED2324_PRJ1_G11/Aluno.cpp || cmake_object_order_depends_target_AED2324_PRJ1_G11
+  DEP_FILE = CMakeFiles\AED2324_PRJ1_G11.dir\Aluno.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\AED2324_PRJ1_G11.dir
+  OBJECT_FILE_DIR = CMakeFiles\AED2324_PRJ1_G11.dir
+
+build CMakeFiles/AED2324_PRJ1_G11.dir/Turma.cpp.obj: CXX_COMPILER__AED2324_PRJ1_G11_unscanned_Debug C$:/Users/AnaBeatrizCarneiroFe/Desktop/uni/2$ ano/AED/AED2324_PRJ1_G11/Turma.cpp || cmake_object_order_depends_target_AED2324_PRJ1_G11
+  DEP_FILE = CMakeFiles\AED2324_PRJ1_G11.dir\Turma.cpp.obj.d
+  FLAGS = -g -std=gnu++11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\AED2324_PRJ1_G11.dir
+  OBJECT_FILE_DIR = CMakeFiles\AED2324_PRJ1_G11.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target AED2324_PRJ1_G11
@@ -69,7 +81,7 @@ build CMakeFiles/AED2324_PRJ1_G11.dir/main.cpp.obj: CXX_COMPILER__AED2324_PRJ1_G
 #############################################
 # Link the executable AED2324_PRJ1_G11.exe
 
-build AED2324_PRJ1_G11.exe: CXX_EXECUTABLE_LINKER__AED2324_PRJ1_G11_Debug CMakeFiles/AED2324_PRJ1_G11.dir/main.cpp.obj
+build AED2324_PRJ1_G11.exe: CXX_EXECUTABLE_LINKER__AED2324_PRJ1_G11_Debug CMakeFiles/AED2324_PRJ1_G11.dir/main.cpp.obj CMakeFiles/AED2324_PRJ1_G11.dir/Aluno.cpp.obj CMakeFiles/AED2324_PRJ1_G11.dir/Turma.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\AED2324_PRJ1_G11.dir

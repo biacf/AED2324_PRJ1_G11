@@ -8,15 +8,24 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <fstream>
+#include <sstream>
 #include "Aluno.h"
 
 class Turma{
-public:
-    std::vector<Aluno>;
+private:
+    std::vector<Aluno> alunos;
+    std::string code;
+    std::string uc_code;
     std::string type;
     std::string weekday;
     int start_hour;
     int duration;
+
+public:
+    Turma(std::ostringstream& line);
+    void fill_alunos(std::ostringstream& line);
+
 };
 
 
