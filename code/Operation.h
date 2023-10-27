@@ -19,7 +19,10 @@ public:
 
     //request manager
         //add request
+    void add_request(const std::string& request);
         //pop request
+    void pop_request();
+
 
     //class
     //class finder
