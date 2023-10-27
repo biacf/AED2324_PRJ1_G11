@@ -31,5 +31,7 @@ add_executable(AED2324_PRJ1_G11 code/main.cpp
         code/Turma.cpp
         code/Log.h
         code/Log.cpp
+        code/Operation.cpp
+        code/Operation.h
 )
 
