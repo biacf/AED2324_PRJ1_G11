@@ -33,6 +33,7 @@ public:
     float get_end_hour();
     int student_number(const std::string& restriction = "");
     int get_year();
+    std::string get_uc();
     //methods
     bool intersects(Turma turma);
     void add_student(Aluno aluno);

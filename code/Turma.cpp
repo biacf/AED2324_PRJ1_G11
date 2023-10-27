@@ -8,7 +8,7 @@ Turma::Turma(std::ostringstream& line){}
 
 //getters
 //returns students in class(all or w/ restrictions)
-std::vector<Aluno> Turma::show_alunos(const std::string& restriction = ""){
+std::vector<Aluno> Turma::show_alunos(const std::string& restriction){
     return alunos;
 }
 
@@ -28,16 +28,22 @@ float Turma::get_end_hour(){
 }
 
 //returns number of students(all or w/ restrictions)
-int Turma::student_number(const std::string& restriction = ""){
+int Turma::student_number(const std::string& restriction){
     return alunos.size();
 }
 
 //returns year
 int Turma::get_year(){
-    return year; //VOU MELHORAR ESTA FUNÇÃO QUANDO CRIAR A CLASSE UC!!!!!
+    return year;
+}
+
+//returns UC
+std::string Turma::get_uc(){
+    return uc_code;
 }
 
 //methods
+//checks if two classes conflict
 bool Turma::intersects(Turma turma){
     return false;
 }

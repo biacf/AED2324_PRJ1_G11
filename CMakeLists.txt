@@ -28,5 +28,8 @@ add_executable(AED2324_PRJ1_G11 code/main.cpp
         code/Turma.h
         code/Aluno.h
         code/Aluno.cpp
-        code/Turma.cpp)
+        code/Turma.cpp
+        code/Log.h
+        code/Log.cpp
+)
 

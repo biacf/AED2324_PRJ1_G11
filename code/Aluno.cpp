@@ -11,12 +11,12 @@ Aluno::Aluno(std::string name_, int student_number_) {
 
 //getters
 //returns classes (full or w/restrictions)
-std::vector<Turma> Aluno::check_horario(const std::string& restriction = ""){
+std::vector<Turma> Aluno::check_horario(const std::string& restriction){
     return horario;
 }
 
 //returns number of curricular units (all or w/restrictions)
-int Aluno::n_uc(const std::string& restriction = ""){
+int Aluno::n_uc(const std::string& restriction){
     return 0;
 }
 
