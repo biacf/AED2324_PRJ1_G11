@@ -24,7 +24,6 @@ private:
 
 public:
     Turma(std::ostringstream& line);
-    void fill_alunos(std::ostringstream& line);
 
 };
 
