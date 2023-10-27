@@ -19,12 +19,24 @@ private:
     std::string uc_code;
     std::string type;
     std::string weekday;
-    int start_hour;
-    int duration;
+    float start_hour;
+    float duration;
+    int year;
 
 public:
+    //constructor
     Turma(std::ostringstream& line);
-
+    //getters
+    std::vector<Aluno> show_alunos(const std::string& restriction = "");
+    std::string get_weekday();
+    float get_start_hour();
+    float get_end_hour();
+    int student_number(const std::string& restriction = "");
+    int get_year();
+    //methods
+    bool intersects(Turma turma);
+    void add_student(Aluno aluno);
+    void remove_student(Aluno aluno);
 };
 
 

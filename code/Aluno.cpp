@@ -3,54 +3,49 @@
 //
 #include "Aluno.h"
 
-//Constructor
+//constructor
 Aluno::Aluno(std::string name_, int student_number_) {
     name = name_;
     student_number = student_number_;
 }
 
-//Getters
-//Returns schedule
-std::vector<Turma> Aluno::check_horario(){
+//getters
+//returns classes (full or w/restrictions)
+std::vector<Turma> Aluno::check_horario(const std::string& restriction = ""){
     return horario;
 }
 
-//Returns number of curricular units
-int Aluno::n_uc(){
+//returns number of curricular units (all or w/restrictions)
+int Aluno::n_uc(const std::string& restriction = ""){
     return 0;
 }
 
-//Returns name
+//returns name
 std::string Aluno::get_name(){
     return name;
 }
 
-//Returns Student Number
+//returns student number
 int Aluno::get_number(){
     return student_number;
 }
 
-//Returns year
+//returns year
 int Aluno::ano_inscricao(){
     return 0;
 }
 
-//Returns classes in a specific day
-std::vector<Turma> Aluno::aulas_por_dia(std::string weekday){
-    return horario;
-}
-
-//Methods
-//Change class
+//methods
+//change class
 bool Aluno::mudar_turma(Turma origem, Turma destino){
     return false;
 }
 
-//Quit class
+//quit class
 void Aluno::sair_turma(Turma turma){
 }
 
-//Sign up for class
+//sign up for class
 bool Aluno::inscrever_turma(Turma turma){
     return false;
 }
