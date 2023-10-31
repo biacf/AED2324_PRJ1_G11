@@ -21,8 +21,10 @@ public:
     //constructor
     DataReader(std::string path);
     //methods
-    std::vector<Aluno> populate_students(std::list<Turma> turma);
+    std::vector<Aluno> populate_students(std::list<Turma>& turma);
     std::list<Turma> populate_class();
+    std::vector<Aluno> populate_students_with_duplicates(std::list<Turma> turma);
+
 };
 
 

@@ -6,6 +6,7 @@
 #define AED2324_PRJ1_G11_OPERATION_H
 
 #include <queue>
+#include <map>
 #include "Log.h"
 #include "Aluno.h"
 
@@ -15,9 +16,11 @@ private:
     std::queue<std::string> requests;
     std::vector<Aluno> alunos;
     std::list<Turma> turmas;
+    std::vector<Aluno> alunos_with_duplicate;
+    std::map<std::string, int> turma_aluno_count;
 public:
     //constructor
-    Operation(std::string start, std::vector<Aluno> aluno, std::list<Turma> turma);
+    Operation(std::string start, std::vector<Aluno>& aluno_, std::list<Turma>& turma_, std::vector<Aluno> alunos_with_duplicate_);
     //methods
     void list();
     void sort();

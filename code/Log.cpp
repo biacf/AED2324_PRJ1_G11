@@ -16,6 +16,7 @@ void Log::add(const std::string& change){
 }
 
 //removes last step (has to check if possible, will return false if no)
-bool Log::remove(){
+bool Log::undo(){
+    
     return false;
 }

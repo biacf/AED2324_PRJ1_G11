@@ -9,7 +9,7 @@ DataReader::DataReader(std::string path) {
     filename = path;
 }
 
-std::vector<Aluno> DataReader::populate_students(std::list<Turma> turma) {
+std::vector<Aluno> DataReader::populate_students(std::list<Turma>& turma) {
     std::vector<Aluno> alunos;
     file.open(filename);
     std::string line;
@@ -69,4 +69,24 @@ std::list<Turma> DataReader::populate_class() {
 
     file.close();
     return turmas;
+}
+std::vector<Aluno> DataReader::populate_students_with_duplicates(std::list<Turma> turma) {
+    std::vector<Aluno> alunos_with_duplicates;
+    file.open(filename);
+    std::string line;
+    getline(file, line); //ignore header
+    std::string name, number, class_code, uc;
+
+    while(getline(file, line)){
+        std::istringstream iss(line);
+        getline(iss,number,',');
+        getline(iss,name,',');
+        getline(iss,uc,',');
+        getline(iss,class_code,',');
+        Aluno aluno(name, number, uc, class_code);
+        alunos_with_duplicates.push_back(aluno);
+    }
+
+    file.close();
+    return alunos_with_duplicates;
 }

@@ -17,7 +17,7 @@ public:
     Log();
     //methods
     void add(const std::string& change);
-    bool remove();
+    bool undo();
 
 };
 #endif //AED2324_PRJ1_G11_LOG_H

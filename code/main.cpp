@@ -15,17 +15,20 @@
 int main(){
     std::vector<Aluno> alunos;
     std::list<Turma> turmas;
+    std::vector<Aluno> alunos_with_duplicates;
+
 
     //distribute data
     DataReader classes("../code/Data/classes.csv");
     turmas = classes.populate_class();
     DataReader students("../code/Data/students_classes.csv");
     alunos = students.populate_students(turmas);
-
+    DataReader students_with_duplicates("../code/Data/students_classes.csv");
+    alunos_with_duplicates = students_with_duplicates.populate_students_with_duplicates(turmas);
 
     //initialize program
     bool continues = true;
-    Operation op("start", alunos, turmas);
+    Operation op("start", alunos, turmas, alunos_with_duplicates);
     std::cout << "Bem vindo ao Gestor de Horario 2LEIC01_G11" << std::endl;
     std::cout << "Selecione o que pretende fazer:" << std::endl;
     std::cout << "1 - Consultar" << std::endl;
