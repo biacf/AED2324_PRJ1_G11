@@ -22,37 +22,38 @@ int main(){
     DataReader students("../code/Data/students_classes.csv");
     alunos = students.populate_students(turmas);
 
+
     //initialize program
     bool continues = true;
     Operation op("start", alunos, turmas);
     std::cout << "Bem vindo ao Gestor de Horario 2LEIC01_G11" << std::endl;
+    std::cout << "Selecione o que pretende fazer:" << std::endl;
+    std::cout << "1 - Consultar" << std::endl;
+    std::cout << "2 - Ordenar" << std::endl;
+    std::cout << "3 - Procurar" << std::endl;
+    std::cout << "4 - Gerir horario de aluno" << std::endl;
+    std::cout << "5 - Desfazer ultima mudanca" << std::endl;
+    std::cout << "6 - Executar" << std::endl;
+
+    int option;
+
     while(continues){
-        std::cout << "Selecione o que pretende fazer:" << std::endl;
-        std::cout << "1 - Consultar" << std::endl;
-        std::cout << "2 - Ordenar" << std::endl;
-        std::cout << "3 - Procurar" << std::endl;
-        std::cout << "4 - Gerir horario de aluno" << std::endl;
-        std::cout << "5 - Desfazer ultima mudanca" << std::endl;
-        std::cout << "6 - Sair" << std::endl;
-
-        int option;
         std::cin >> option;
-
         switch(option){
             case 1:
-                op.list();
+                op.add_request("list");
                 break;
             case 2:
-                op.sort();
+                op.add_request("sort");
                 break;
             case 3:
-                op.search();
+                op.add_request("search");
                 break;
             case 4:
-                op.schedule_manager();
+                op.add_request("manage_schedule");
                 break;
             case 5:
-                op.undo();
+                op.add_request("undo");
                 break;
             case 6:
                 continues = false;
@@ -60,6 +61,7 @@ int main(){
         }
     }
 
+    op.operate();
     /*
     //Menu
     int escolha;

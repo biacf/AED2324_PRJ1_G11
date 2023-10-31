@@ -11,6 +11,7 @@
 
 class Operation {
 private:
+    Log log;
     std::queue<std::string> requests;
     std::vector<Aluno> alunos;
     std::list<Turma> turmas;
@@ -23,12 +24,10 @@ public:
     void search();
     void schedule_manager();
     void undo();
-
+    void operate();
     //request manager
     //add request
     void add_request(const std::string& request);
-    //pop request
-    void pop_request();
 
 
 };
