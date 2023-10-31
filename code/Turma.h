@@ -10,34 +10,28 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "Aluno.h"
+#include <list>
+
 
 class Turma{
 private:
-    std::vector<Aluno> alunos;
     std::string code;
-    std::string uc_code;
-    std::string type;
+    std::string uc;
     std::string weekday;
-    float start_hour;
+    float start_time;
     float duration;
-    int year;
-
+    std::string type;
 public:
     //constructor
-    Turma(std::ostringstream& line);
+    Turma(std::string code_, std::string uc_, std::string weekday_, float start_time_, float duration_, std::string type_);
     //getters
-    std::vector<Aluno> show_alunos(const std::string& restriction = "");
-    std::string get_weekday();
-    float get_start_hour();
-    float get_end_hour();
-    int student_number(const std::string& restriction = "");
-    int get_year();
-    std::string get_uc();
-    //methods
-    bool intersects(Turma turma);
-    void add_student(Aluno aluno);
-    void remove_student(Aluno aluno);
+    std::string get_code() const{return code;};
+    std::string get_uc() const{return uc;};
+    std::string get_weekday() const{return weekday;};
+    float get_start_time() const{return start_time;};
+    float get_duration() const{return duration;};
+    std::string get_type() const{return type;};
+    float get_end_time() const{return start_time + duration;};
 };
 
 

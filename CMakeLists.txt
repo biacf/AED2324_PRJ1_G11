@@ -3,6 +3,7 @@ project(AED2324_PRJ1_G11)
 
 set(CMAKE_CXX_STANDARD 11)
 
+
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     set(BUILD_DOC_DIR "${CMAKE_SOURCE_DIR}/docs/output")
@@ -33,5 +34,12 @@ add_executable(AED2324_PRJ1_G11 code/main.cpp
         code/Log.cpp
         code/Operation.cpp
         code/Operation.h
+        code/Data/students_classes.csv
+        code/Data/classes.csv
+        code/Data/classes_per_uc.csv
+        code/DataReader.cpp
+        code/DataReader.h
+        code/ScheduleManager.cpp
+        code/ScheduleManager.h
 )
 

@@ -2,54 +2,8 @@
 // Created by AnaBeatrizCarneiroFe on 24/10/2023.
 //
 #include "Turma.h"
+#include <iostream>
 
-//constructor
-Turma::Turma(std::ostringstream& line){}
+Turma::Turma(std::string code_, std::string uc_, std::string weekday_, float start_time_, float duration_,
+             std::string type_) : code(code_), uc(uc_), weekday(weekday_), start_time(start_time_), duration(duration_), type(type_) {}
 
-//getters
-//returns students in class(all or w/ restrictions)
-std::vector<Aluno> Turma::show_alunos(const std::string& restriction){
-    return alunos;
-}
-
-//returns weekday
-std::string Turma::get_weekday(){
-    return weekday;
-}
-
-//returns star hour
-float Turma::get_start_hour(){
-    return start_hour;
-}
-
-//returns end hour
-float Turma::get_end_hour(){
-    return start_hour + duration;
-}
-
-//returns number of students(all or w/ restrictions)
-int Turma::student_number(const std::string& restriction){
-    return alunos.size();
-}
-
-//returns year
-int Turma::get_year(){
-    return year;
-}
-
-//returns UC
-std::string Turma::get_uc(){
-    return uc_code;
-}
-
-//methods
-//checks if two classes conflict
-bool Turma::intersects(Turma turma){
-    return false;
-}
-
-//adds student
-void Turma::add_student(Aluno aluno){}
-
-//removes student
-void Turma::remove_student(Aluno aluno){}
