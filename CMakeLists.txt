@@ -39,7 +39,7 @@ add_executable(AED2324_PRJ1_G11 code/main.cpp
         code/Data/classes_per_uc.csv
         code/DataReader.cpp
         code/DataReader.h
-        code/ScheduleManager.cpp
-        code/ScheduleManager.h
+        code/BSTree.cpp
+        code/BSTree.h
 )
 

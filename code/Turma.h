@@ -21,10 +21,12 @@ private:
     float start_time;
     float duration;
     std::string type;
+    int n_alunos;
 public:
     //constructor
     Turma(std::string code_, std::string uc_, std::string weekday_, float start_time_, float duration_, std::string type_);
     //getters
+    void display_turma();
     std::string get_code() const{return code;};
     std::string get_uc() const{return uc;};
     std::string get_weekday() const{return weekday;};
@@ -32,6 +34,8 @@ public:
     float get_duration() const{return duration;};
     std::string get_type() const{return type;};
     float get_end_time() const{return start_time + duration;};
+    int get_n_alunos() const{return n_alunos;};
+    void add_alunos(){n_alunos++;};
 };
 
 

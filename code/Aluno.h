@@ -29,12 +29,17 @@ public:
     std::string get_number() const{return student_number;};
     std::string get_uc() const{return uc;};
     std::string get_class_code() const{return class_code;};
+    std::list<Turma> get_horario() const{return horario;};
     void display_horario();
     std::vector<std::string> unique_turmas();
+    std::vector<std::string> unique_ucs();
+
     //methods
-    void add_class(Turma turma);
-    void remove_class(std::string code, std::string uc);
-    bool add_class_check(std::list<Turma> turmas, std::string code, std::string uc);
+    void add_class(const Turma& turma);
+    void remove_class(const std::string& code, const std::string& uc);
+    bool add_class_check(std::list<Turma> turmas, const std::string& code, const std::string& uc, const std::list<Turma>& outras_t_uc);
+    std::list<Turma> sort_horario();
+    static bool turma_comp(const Turma& turma1, const Turma& turma2);
 
 };
 

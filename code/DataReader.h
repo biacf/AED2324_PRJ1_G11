@@ -19,11 +19,11 @@ private:
     std::ifstream file;
 public:
     //constructor
-    DataReader(std::string path);
+    explicit DataReader(std::string path);
     //methods
-    std::vector<Aluno> populate_students(std::list<Turma>& turma);
-    std::list<Turma> populate_class();
-    std::vector<Aluno> populate_students_with_duplicates(std::list<Turma> turma);
+    std::list<Aluno> populate_students(std::vector<Turma>& turma);
+    std::vector<Turma> populate_class();
+    std::list<Aluno> populate_students_with_duplicates(const std::vector<Turma>& turma);
 
 };
 

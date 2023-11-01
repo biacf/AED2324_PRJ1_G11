@@ -9,18 +9,21 @@
 #include <map>
 #include "Log.h"
 #include "Aluno.h"
+#include "BSTree.h"
 
 class Operation {
 private:
     Log log;
     std::queue<std::string> requests;
-    std::vector<Aluno> alunos;
-    std::list<Turma> turmas;
-    std::vector<Aluno> alunos_with_duplicate;
+    std::list<Aluno> alunos;
+    std::vector<Turma> turmas;
+    std::list<Aluno> alunos_with_duplicate;
     std::map<std::string, int> turma_aluno_count;
+    std::map<std::string, int> uc_aluno_count;
+
 public:
     //constructor
-    Operation(std::string start, std::vector<Aluno>& aluno_, std::list<Turma>& turma_, std::vector<Aluno> alunos_with_duplicate_);
+    Operation(const std::string& start, std::list<Aluno>& aluno_, std::vector<Turma>& turma_, std::list<Aluno> alunos_with_duplicate_);
     //methods
     void list();
     void sort();

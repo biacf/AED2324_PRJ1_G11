@@ -3,18 +3,25 @@
 //
 
 #include <iostream>
+#include <algorithm>
+#include <utility>
 #include "Operation.h"
 
 //constructor
-Operation::Operation(std::string start, std::vector<Aluno>& aluno_, std::list<Turma>& turma_, std::vector<Aluno> aluno_with_duplicate_) {
+Operation::Operation(const std::string& start, std::list<Aluno>& aluno_, std::vector<Turma>& turma_, std::list<Aluno> aluno_with_duplicate_) {
     requests.push(start);
     alunos = aluno_;
     turmas = turma_;
-    alunos_with_duplicate = aluno_with_duplicate_;
+    alunos_with_duplicate = std::move(aluno_with_duplicate_);
 
     for (Aluno aluno : alunos) {
         for (const std::string& turma : aluno.unique_turmas()) {
             turma_aluno_count[turma]++;
+        }
+    }
+    for (Aluno aluno : alunos) {
+        for (const std::string& uc : aluno.unique_ucs()) {
+            uc_aluno_count[uc]++;
         }
     }
 
@@ -37,7 +44,7 @@ void Operation::list(){
         case 1:{
             std::vector<Aluno> alunos_da_turma_repetidos;
             std::string codigo_turma;
-            std::cout<<"Codigo da Turma: "<<std::endl;
+            std::cout<<"Codigo da Turma: ";
             std::cin>>codigo_turma;
             std::cout<<"Alunos pertencentes a turma "<<codigo_turma<<": "<<std::endl;
             for(const Aluno& aluno : alunos_with_duplicate){
@@ -118,7 +125,7 @@ void Operation::list(){
                     turmas_sem_repetidos.push_back(codigo_turma);
                 }
             }
-            for(std::string turmas : turmas_sem_repetidos){
+            for(const std::string& turmas : turmas_sem_repetidos){
                 std::cout<<turmas<<std::endl;
             }
             break;}
@@ -140,27 +147,79 @@ void Operation::list(){
                     ucs_sem_repetidos.push_back(codigo_uc);
                 }
             }
-            for(std::string ucs : ucs_sem_repetidos){
+            for(const std::string& ucs : ucs_sem_repetidos){
                 std::cout<<ucs<<std::endl;
             }
             break;}
-        case 6:{
-            break;}
-
+        case 6:
+            break;
+        default:
+            std::cout << "Opcao invalida" << std::endl;
+            break;
     }
 }
 
 //access sort operations
 void Operation::sort() {
+    int option;
+    std::cout << "ORDENAR" << std::endl;
+    std::cout << "1 - Ordenar alunos por ordem alfabetica" << std::endl;
+    std::cout << "2 - Ordenar horario de um aluno (por dia da semana)" << std::endl;
+    std::cout << "3 - Sair" << std::endl;
+    std::cin >> option;
 
+    switch(option){
+        case 1:
+        {
+            BSTree bst;
+            for (const Aluno& aluno : alunos) {
+                bst.insert(aluno);
+            }
+
+            std::list<Aluno> sorted_alunos = bst.sort();
+            alunos = std::move(sorted_alunos);
+
+            for (const Aluno& aluno : alunos) {
+                std::cout << aluno.get_name() << ", " << aluno.get_number() << std::endl;
+            }
+        }
+            break;
+        case 2:
+        {
+            std::string name;
+            std::list<Turma> sorted_horario;
+            std::cout << "Nome: " << std::endl;
+            std::cin >> name;
+            auto it = std::find_if(alunos.begin(), alunos.end(),[&name](const Aluno& aluno) {return aluno.get_name() == name;});
+            if (it != alunos.end()) {
+                sorted_horario = it->sort_horario();
+            }
+
+            for(Turma turma: sorted_horario){
+                turma.display_turma();
+            }
+        }
+            break;
+        case 3:
+            break;
+        default:
+            std::cout << "Opcao invalida" << std::endl;
+            break;
+    }
 }
 
 //access search operations
 void Operation::search() {
     int option;
     std::string word;
-    int max = turma_aluno_count.begin()->second;
+    std::string word_turma = turma_aluno_count.begin()->first;
+    std::string word_uc = uc_aluno_count.begin()->first;
+    int max_turma = turma_aluno_count.begin()->second;
+    int min_turma = turma_aluno_count.begin()->second;
+    int max_uc = uc_aluno_count.begin()->second;
+    int min_uc = uc_aluno_count.begin()->second;
     bool found = false;
+    bool continue_switch = true;
     std::cout << "PROCURAR" << std::endl;
     std::cout << "1 - Procurar Nome de ALuno atraves do Numero" << std::endl;
     std::cout << "2 - Procurar Numero de Aluno atraves do Nome" << std::endl;
@@ -176,63 +235,145 @@ void Operation::search() {
 
     switch(option){
         case 1:
-            std::cout << "Numero do aluno: ";
-            std::cin >> word;
+            while(continue_switch) {
+                std::cout << "Numero do aluno: ";
+                std::cin >> word;
 
-            for(const Aluno& aluno : alunos){
-                if(aluno.get_number() == word){
-                    std::cout << aluno.get_name() << std::endl;
-                    found = true;
+                for (const Aluno &aluno: alunos) {
+                    if (aluno.get_number() == word) {
+                        std::cout << aluno.get_name() << std::endl;
+                        found = true;
+                        continue_switch = false;
+                    }
+                }
+
+                if (!found) {
+                    std::cout << "Aluno nao encontrado. Insira um numero de aluno existente" << std::endl;
+                    continue_switch = true;
                 }
             }
-
-            if(!found){
-                std::cout << "Aluno nao encontrado." << std::endl;
-            }
-
             break;
+
         case 2:
-            std::cout << "Nome do aluno: ";
-            std::cin >> word;
+            while(continue_switch) {
+                std::cout << "Nome do aluno: ";
+                std::cin >> word;
 
-            for(const Aluno& aluno : alunos){
-                if(aluno.get_name() == word){
-                    std::cout << aluno.get_number() << std::endl;
-                    found = true;
+                for (const Aluno &aluno: alunos) {
+                    if (aluno.get_name() == word) {
+                        std::cout << aluno.get_number() << std::endl;
+                        found = true;
+                        continue_switch = false;
+
+                    }
+                }
+
+                if (!found) {
+                    std::cout << "Aluno nao encontrado. Insira um nome de aluno existente" << std::endl;
+                    continue_switch = true;
+
                 }
             }
-
-            if(!found){
-                std::cout << "Aluno nao encontrado." << std::endl;
-            }
-
             break;
+
         case 3:
-            for(auto it = turma_aluno_count.begin(); it != turma_aluno_count.end(); it++){
-                if(it->second > max){
-                    max = it->second;
-                    word = it->first;
+            for(auto & it : turma_aluno_count){
+                if(it.second > max_turma){
+                    max_turma = it.second;
+                    word_turma = it.first;
                 }
             }
-            std::cout << "Turma: " << word << " Numero de alunos:" << std::to_string(max) << std::endl;
+            std::cout << "Turma: " << word_turma << " Numero de alunos:" << max_turma <<std::endl;
+
             break;
+
         case 4:
+            for(auto & it : turma_aluno_count){
+                if(it.second < min_turma){
+                    min_turma = it.second;
+                    word_turma = it.first;
+                }
+            }
+            std::cout << "Turma: " << word_turma << " Numero de alunos:" << min_turma << std::endl;
 
             break;
+
         case 5:
+            for(auto & it : uc_aluno_count){
+                if(it.second > max_uc){
+                    max_uc = it.second;
+                    word_uc = it.first;
+                }
+            }
+            std::cout << "UC: " << word_uc << " Numero de alunos:" << max_uc<< std::endl;
 
             break;
+
         case 6:
+            for(auto & it : uc_aluno_count){
+                if(it.second < min_uc){
+                    min_uc = it.second;
+                    word_uc = it.first;
+                }
+            }
+            std::cout << "UC: " << word_uc << " Numero de alunos:" << min_uc << std::endl;
 
             break;
+
         case 7:
+            while(continue_switch) {
+                std::string turma;
+                std::cout << "Codigo da turma: ";
+                std::cin >> turma;
+                int num;
+                for (auto & it : turma_aluno_count) {
+                    if (it.first == turma) {
+                        num = it.second;
+                        found = true;
+                    }
+                }
+                if(!found){
+                    std::cout << "Turma nao encontrada. Insira um codigo de turma existente" << std::endl;
+                    continue_switch = true;
+                }
+                else{
+                    continue_switch = false;
+                    std::cout << "Turma: " << turma << std::endl << "Numero de alunos:" << num << std::endl;
+                }
+
+            }
             break;
+
         case 8:
+            while (continue_switch) {
+                std::string uc;
+                std::cout << "Codigo da UC: ";
+                std::cin >> uc;
+                int num;
+                for (auto & it : uc_aluno_count) {
+                    if (it.first == uc) {
+                        num = it.second;
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    std::cout << "UC nao encontrada. Insira um codigo de UC existente" << std::endl;
+                    continue_switch = true;
+                }
+                else {
+                    continue_switch = false;
+                    std::cout << "UC: " << uc << std::endl << "Numero de alunos:" << num << std::endl;
+                }
+            }
             break;
         case 9:
+            return;
+        default:
+            std::cout << "Opcao invalida" << std::endl;
             break;
     }
 }
+
 
 //access schedule manager operations
 void Operation::schedule_manager() {
@@ -242,6 +383,7 @@ void Operation::schedule_manager() {
     std::string uc;
     std::string turma_f;
     std::list<Turma> aulas_turma_uc;
+    std::list<Turma> uc_outras_t;
     bool possible;
     std::cout << "GESTOR DE HORARIO" << std::endl;
     std::cout << "1 - Inscrever em Turma" << std::endl;
@@ -260,20 +402,35 @@ void Operation::schedule_manager() {
             std::cout << "Codigo UC: ";
             std::cin >> uc;
 
+            //get uc turmas
+            for(const Turma& turma: turmas){
+                if(turma.get_uc() == uc && turma.get_code() != turma_f){
+                    auto it = std::find_if(uc_outras_t.begin(), uc_outras_t.end(),[&turma_f](const Turma& turmas) {return turmas.get_code() == turma_f;});
+                    if(it == uc_outras_t.end()){
+                        uc_outras_t.push_back(turma);
+                    }
+                }
+            }
             //get aulas for uc's turma
-            for(Turma turma : turmas){
+            for(const Turma& turma : turmas){
                 if(turma.get_uc() == uc && turma.get_code() == turma_f){
                     aulas_turma_uc.push_back(turma);
                 }
             }
             for(Aluno& aluno:alunos){
                 if(aluno.get_name() == nome){
-                    possible = aluno.add_class_check(aulas_turma_uc, turma_f, uc);
+                    possible = aluno.add_class_check(aulas_turma_uc, turma_f, uc, uc_outras_t);
+                    if(possible){
+                        aluno.display_horario();
+                    }
+                    break;
                 }
             }
             if(possible){
                 log.add("signup " + nome + " " + turma_f + " " + uc);
                 std::cout << "Inscreveu-se com sucesso" << std::endl;
+                turma_aluno_count[turma_f]++;
+                uc_aluno_count[uc]++;
             }
             else{
                 std::cout << "Nao foi possivel realizar a inscricao" << std::endl;
@@ -289,12 +446,16 @@ void Operation::schedule_manager() {
             std::cin >> uc;
             log.add("quit " + nome + " " + turma_d + " " + uc);
 
-            for(Aluno aluno:alunos){
+            for(Aluno& aluno:alunos){
                 if(aluno.get_name() == nome){
                     aluno.remove_class(turma_d, uc);
+                    aluno.display_horario();
+                    break;
                 }
             }
             std::cout << "Desistiu com sucesso." << std::endl;
+            turma_aluno_count[turma_d]--;
+            uc_aluno_count[uc]--;
             break;
         case 3:
             std::cout << "Nome do Aluno: ";
@@ -306,44 +467,62 @@ void Operation::schedule_manager() {
             std::cout << "Turma de Destino: ";
             std::cin >> turma_f;
 
+            for(const Turma& turma: turmas){
+                if(turma.get_uc() == uc && turma.get_code() != turma_f){
+                    auto it = std::find_if(uc_outras_t.begin(), uc_outras_t.end(),[&turma_f](const Turma& turmas) {return turmas.get_code() == turma_f;});
+                    if(it == uc_outras_t.end()){
+                        uc_outras_t.push_back(turma);
+                    }
+                }
+            }
             //get classes for final class
-            for(Turma turma : turmas){
+            for(const Turma& turma : turmas){
                 if(turma.get_uc() == uc && turma.get_code() == turma_f){
                     aulas_turma_uc.push_back(turma);
                 }
             }
 
             //remove from origin class
-            for(Aluno aluno: alunos){
+            for(Aluno& aluno: alunos){
                 if(aluno.get_name() == nome){
-                    aluno.display_horario();
-                    std::cout << "----------------------------------------------YEEEEEEE" << std::endl;
+                    if(std::find(aluno.unique_ucs().begin(), aluno.unique_ucs().end(), uc) == aluno.unique_ucs().end()){
+                        std::cout << "Nao foi possivel mudar pois aluno nao esta inscrito nessa uc" << std::endl;
+                        break;
+                    }
                     aluno.remove_class(turma_d, uc);
-                    possible = aluno.add_class_check(aulas_turma_uc, turma_f, uc); //add to new class;
+                    possible = aluno.add_class_check(aulas_turma_uc, turma_f, uc, uc_outras_t); //add to new class;
+                    //add back to original class if not possible
                     if(!possible){
                         aulas_turma_uc.clear();
-                        for(Turma turma : turmas){
+                        for(const Turma& turma : turmas){
                             if(turma.get_uc() == uc && turma.get_code() == turma_d){
                                 aulas_turma_uc.push_back(turma);
                             }
                         }
-                        aluno.add_class_check(aulas_turma_uc, turma_d, uc);
+                        aluno.add_class_check(aulas_turma_uc, turma_d, uc, uc_outras_t);
                     }
-                    aluno.display_horario();
+                    else{
+                        aluno.display_horario();
+                    }
+                    break;
                 }
             }
 
-            //add back to origin class if not possible
+
             if(possible){
                 log.add("change " + nome + " " + uc + " " + turma_d + " " + turma_f );
                 std::cout << "Mudanca com sucesso." << std::endl;
+                turma_aluno_count[turma_d]--;
+                turma_aluno_count[turma_f]++;
             }
             else{
                 std::cout << "Nao foi possivel efetuar a mudanca." << std::endl;
             }
             break;
         case 4:
-            break;
+            return;
+        default:
+            std::cout << "Opcao invalida" << std::endl;
     }
 
 }
@@ -352,7 +531,25 @@ void Operation::schedule_manager() {
 void Operation::undo(){
     std::cout << "UNDO" << std::endl;
     bool success;
-    success = log.undo();
+    success = log.undo(alunos, turmas);
+    if(success){
+        std::cout << "Acao desfeita com sucesso." << std::endl;
+    }
+    else{
+        std::cout << "Nao foi possivel desfazer a acao." << std::endl;
+    }
+
+    //update
+    for (Aluno aluno : alunos) {
+        for (const std::string& turma : aluno.unique_turmas()) {
+            turma_aluno_count[turma]++;
+        }
+    }
+    for (Aluno aluno : alunos) {
+        for (const std::string& uc : aluno.unique_ucs()) {
+            uc_aluno_count[uc]++;
+        }
+    }
 }
 
 //run
