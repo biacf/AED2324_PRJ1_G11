@@ -13,13 +13,13 @@
 
 class Operation {
 private:
-    Log log;
-    std::queue<std::string> requests;
-    std::list<Aluno> alunos;
-    std::vector<Turma> turmas;
-    std::list<Aluno> alunos_with_duplicate;
-    std::map<std::string, int> turma_aluno_count;
-    std::map<std::string, int> uc_aluno_count;
+    Log log; /*!< Log object */
+    std::queue<std::string> requests;/*!< Queue to keep track of requests */
+    std::list<Aluno> alunos; /*!< List of existing students */
+    std::vector<Turma> turmas; /*!< Vector of existing classes/lectures */
+    std::list<Aluno> alunos_with_duplicate; /*!< List of Student objects including duplicates */
+    std::map<std::string, int> turma_aluno_count; /*!< Map that associates classes with occupancy */
+    std::map<std::string, int> uc_aluno_count; /*!< Map that associates UCs with occupancy */
 
 public:
     //constructor

@@ -7,18 +7,33 @@
 #include <sstream>
 #include <algorithm>
 
-//constructor
+//! A constructor.
+/*!
+  Starts Log object stack to track history of changes made.
+*/
 Log::Log(){
     history.emplace("start");
 }
-
-//methods
-//adds most recent alteration to history stack
+/**
+ * @brief Update Log stack
+ *
+ * Adds a string to the stack that describes using specific keywords the changes made to the original data collected from the .csv files
+ *
+ * @param change String that describes the changes made to the original data
+ */
 void Log::add(const std::string& change){
     history.push(change);
 }
 
-//removes last step (has to check if possible, will return false if no)
+/**
+ * @brief Undoes latest change
+ *
+ * Method that undoes the latest change made in terms of student schedules. It can be successful or not depending on whether there's a change to undo in the first place, or whether other factors stop the change from being undone.
+ *
+ * @param alunos List of existing students
+ * @param turmas Vector of existing classes
+ * @return Boolean value. False if undo action wasn't succesful and true otherwise
+ */
 bool Log::undo(std::list<Aluno>& alunos, const std::vector<Turma>& turmas){
     std::string change = history.top();
     std::string action, name, uc, turma_d, turma_f;

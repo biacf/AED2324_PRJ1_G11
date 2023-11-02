@@ -6,10 +6,22 @@
 #include <utility>
 #include "DataReader.h"
 
+//! A constructor.
+/*!
+    Builds a DataReader object from the path of the .csv file to be parsed
+*/
 DataReader::DataReader(std::string path) {
     filename = std::move(path);
 }
 
+/**
+ * @brief Collects data from "students_classes.csv"
+ *
+ * Creates Student Objects from data collected from .csv file, associating them with the classes they're enrolled in
+ *
+ * @param turma A vector of all the existing Classes
+ * @return A list of all the existing Student objects
+ */
 std::list<Aluno> DataReader::populate_students(std::vector<Turma>& turma) {
     std::list<Aluno> alunos;
     file.open(filename);
@@ -46,7 +58,12 @@ std::list<Aluno> DataReader::populate_students(std::vector<Turma>& turma) {
 }
 
 
-
+/**
+ * @brief Creates Class objects
+ *
+ * Creates Class objects from data collected from .csv file
+ * @return Vector of Class objects for every existing class/lecture
+ */
 std::vector<Turma> DataReader::populate_class() {
     std::vector<Turma> turmas;
     file.open(filename);
@@ -71,6 +88,14 @@ std::vector<Turma> DataReader::populate_class() {
     return turmas;
 }
 
+/**
+ * @brief Creates Student Object for every Class they're enrolled in
+ *
+ * Creates Student objects without excluding duplicates, to be used in methods in the Operation class
+ *
+ * @param turma A vector of all the existing Classes
+ * @return A list of Student Objects, including duplicates (one for every class they're enrolled in)
+ */
 std::list<Aluno> DataReader::populate_students_with_duplicates(const std::vector<Turma>& turma) {
     std::list<Aluno> alunos_with_duplicates;
     file.open(filename);

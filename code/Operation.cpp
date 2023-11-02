@@ -7,7 +7,10 @@
 #include <utility>
 #include "Operation.h"
 
-//constructor
+//! A constructor.
+/*!
+  Build a Operation object from an initial string for the Requests queue and the vectors and lists created in main.cpp from parsed data from the .csv files
+*/
 Operation::Operation(const std::string& start, std::list<Aluno>& aluno_, std::vector<Turma>& turma_, std::list<Aluno> aluno_with_duplicate_) {
     requests.push(start);
     alunos = aluno_;
@@ -27,8 +30,11 @@ Operation::Operation(const std::string& start, std::list<Aluno>& aluno_, std::ve
 
 }
 
-//methods
-//access list operations
+/**
+ * @brief Access list operations
+ *
+ * Method that allows the user to use a multitude of list operations, such as listing all the students in a class or all available curricular units
+ */
 void Operation::list(){
     int option;
     //display mostrar nome e numero
@@ -159,7 +165,11 @@ void Operation::list(){
     }
 }
 
-//access sort operations
+/**
+ * @brief Access sort operations
+ *
+ * Method that allows the user to use sort operations, namely sorting the existing students in alphabetical order and sorting a specific student's schedule
+ */
 void Operation::sort() {
     int option;
     std::cout << "ORDENAR" << std::endl;
@@ -208,7 +218,11 @@ void Operation::sort() {
     }
 }
 
-//access search operations
+/**
+ * @brief Access search operations
+ *
+ * Method that allows user to search for specific information, such as the class with the most students or look up a student's number from their name and vice-versa
+ */
 void Operation::search() {
     int option;
     std::string word;
@@ -375,7 +389,11 @@ void Operation::search() {
 }
 
 
-//access schedule manager operations
+/**
+ * @brief Access schedule manager
+ *
+ * Method that allows user to change student's schedule. Operations include signing up for a class, quitting a class and changing classes for a specific UC
+ */
 void Operation::schedule_manager() {
     int option;
     std::string nome;
@@ -527,7 +545,11 @@ void Operation::schedule_manager() {
 
 }
 
-//process undo operation
+/**
+ * @brief Undo operation
+ *
+ * Method that allows user to undo the latest change made through schedule manager
+ */
 void Operation::undo(){
     std::cout << "UNDO" << std::endl;
     bool success;
@@ -552,7 +574,11 @@ void Operation::undo(){
     }
 }
 
-//run
+/**
+ * @brief Process requests
+ *
+ * Method that processes the requests on the queue, sending them to the specific method they relate to
+ */
 void Operation::operate() {
     while(true){
         if(requests.front() == "start"){
@@ -585,7 +611,13 @@ void Operation::operate() {
 
 }
 
-//add request
+/**
+ * @brief Adds request
+ *
+ * Method that adds request to queue
+ *
+ * @param request Request to be added to queue
+ */
 void Operation::add_request(const std::string &request) {
     requests.push(request);
 }

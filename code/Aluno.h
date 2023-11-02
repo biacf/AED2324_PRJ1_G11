@@ -12,11 +12,11 @@
 
 class Aluno{
 private:
-    std::string name;
-    std::string student_number;
-    std::list<Turma> horario;
-    std::string uc;
-    std::string class_code;
+    std::string name; /*!< Student name */
+    std::string student_number; /*!< Student number */
+    std::list<Turma> horario; /*!< Student schedule */
+    std::string uc; /*!< Curricular unit */
+    std::string class_code;/*!< Class code */
 
 
 public:
@@ -25,11 +25,14 @@ public:
     Aluno(std::string name_, std::string student_number_, std::string uc_, std::string class_code_ );
 
     //getters
+    /*! A getter method @return Student name */
     std::string get_name() const{return name;};
+    /*! A getter method @return Student number */
     std::string get_number() const{return student_number;};
+    /*! A getter method @return Curricular unit */
     std::string get_uc() const{return uc;};
+    /*! A getter method @return Class code*/
     std::string get_class_code() const{return class_code;};
-    std::list<Turma> get_horario() const{return horario;};
     void display_horario();
     std::vector<std::string> unique_turmas();
     std::vector<std::string> unique_ucs();

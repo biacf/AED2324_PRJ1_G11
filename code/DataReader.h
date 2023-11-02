@@ -15,8 +15,8 @@
 
 class DataReader {
 private:
-    std::string filename;
-    std::ifstream file;
+    std::string filename; /*!< Path to the .csv file*/
+    std::ifstream file; /*!< ifstream object */
 public:
     //constructor
     explicit DataReader(std::string path);

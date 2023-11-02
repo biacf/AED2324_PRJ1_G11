@@ -13,7 +13,7 @@
 
 class Log{
 private:
-    std::stack<std::string> history;
+    std::stack<std::string> history;  /*!< Stack of changes made to original data */
 
 public:
     //constructor
